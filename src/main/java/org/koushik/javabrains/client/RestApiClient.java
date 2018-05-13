@@ -18,15 +18,21 @@ public class RestApiClient {
 		
 		Client client = ClientBuilder.newClient();
 		
-		WebTarget target =client.target("http://localhost:8080/advanced-jaxrs-01/webapi/messages/1");
+		WebTarget baseTarget = client.target("http://localhost:8080/advanced-jaxrs-01/webapi/");
+		WebTarget messagetarget = baseTarget.path("messages");
+		//messagetarget.path("2");
+		WebTarget singleMessageTarget = messagetarget.path("{messageId}");
 		
-		Builder builder = target.request(MediaType.APPLICATION_JSON);
-		//Message msg = builder.get(Message.class);
-		String msg = builder.get(String.class);
-		 
-		System.out.println(msg.toString());
+		Message msg1 = singleMessageTarget.resolveTemplate("messageId", "1")
+						.request(MediaType.APPLICATION_JSON)
+						.get(Message.class); 
+		System.out.println(msg1.toString());
 		
-		
+		Message msg2 = singleMessageTarget.resolveTemplate("messageId", "2")
+				.request(MediaType.APPLICATION_JSON)
+				.get(Message.class); 
+		System.out.println(msg2.toString());
+
 		
 		
 	}
