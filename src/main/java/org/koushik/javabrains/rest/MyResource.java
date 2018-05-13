@@ -26,5 +26,11 @@ public class MyResource {
 		
 		return Calendar.getInstance().getTime();
 	}
-
+	
+	@GET
+	@Path("/customMediaType")
+	@Produces(value={MediaType.TEXT_PLAIN,"text/shortdate"})
+	public Date testMethodNew(){
+		return Calendar.getInstance().getTime();
+	}
 }
